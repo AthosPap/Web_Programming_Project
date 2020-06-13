@@ -1,0 +1,10 @@
+    .table tr:hover td{
+    background-color: lightseagreen;
+    color: black;
+    -webkit-transition: all 0.5s linear;
+   }
+
+   .table-selected{
+    background-color: lightseagreen !important;
+    color: black !important; 
+   }

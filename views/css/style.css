@@ -1,0 +1,127 @@
+/* Navigation Bar style*/
+/* #main-ul{
+  margin: 0em 1.5em !important;
+} */
+
+nav ul{
+    margin: 0em 4em !important;
+  }
+  
+  #drop{
+    background-color: #222 !important;
+    border-color: #080808 !important;
+  }
+  
+  #drop a{
+    color: #999 !important;
+  }
+  
+  #drop a:hover{
+    color: #fff !important;
+    background-color: #000 !important;
+  }
+  
+  .bg {
+      /* The image used */
+      background-image: url("https://up1053539.z6.web.core.windows.net/TennisClub/images/background.jpg");
+      height: 100%;
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  
+  .todo{
+    color: aqua;
+  }
+  
+  .bg-f{
+    background-color: #2f2f2f;
+    color: #ffffff;
+  }
+  
+  ul.nav-pills {
+    top: 300px;
+    position: fixed;
+  }
+  
+  /* Google Maps */
+  .mapouter {
+    position: relative;
+    text-align: right;
+    height: 340px;
+    width: 400px;
+  }
+  
+  .gmap_canvas {
+    overflow: hidden;
+    background: none !important;
+    height: 340px;
+    width: 400px;
+  }
+  /*****************/
+  
+  .btn-send{
+    width: 120px;
+  }
+  
+  .fab{
+    color: black;
+  }
+  
+  .fa-facebook:hover{
+    color: #4267B2;
+  }
+  
+  .fa-instagram:hover{
+    color: #C13584;
+  }
+  
+  .fa-twitter:hover{
+    color: #1DA1F2;
+  }
+  
+  .thumbnail a{
+    color: black;
+    text-decoration: none;
+  }
+  
+  .thumbnail img{
+    margin-bottom: 0.6em;
+  }
+  
+  .thumbnail p{
+    margin-bottom: 2em;
+  }
+  
+  .bg-m{
+    /* The image used */
+    background-image: url(https://up1053539.z6.web.core.windows.net/TennisClub/images/monte-carlo.jpg);
+  
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .user-info{
+    color: #03cffc !important;
+  }
+
+  .user-info:hover{
+    color: #03f4fc !important;
+  }
+
+  .user-settings:hover{
+    background-color: #a2a0a3 !important;
+  }
+
+  .table td,.table th{
+    text-align: center;
+  }
+
+  .list-group{
+    display: inline-block;
+  }

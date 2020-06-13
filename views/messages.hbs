@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="utf-8">
+    <title>Tennis Club</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="saveSource.js" async></script>
+    <script src="messages.js" defer></script>
+    <link rel="stylesheet" href="messages.css">
+</head>
+
+<body>
+    <div id="nav-placeholder" class="contact">
+    </div>
+    <script>
+        $(function () {
+            $("#nav-placeholder").load("nav.hbs", function () {
+                let active = document.getElementById("contact");
+                active.setAttribute("class", active.getAttribute("class") + " active");
+                //
+                let ul = document.getElementsByClassName("last")[0];
+                let ulHTML = ul.innerHTML;
+                ul.innerHTML = `
+                {{#unless user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="sign-up.html" onclick="setStorage()"><i class="fas fa-sign-in-alt">&nbsp;</i>Εγγραφή</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html" onclick="setStorage()"><i class="fas fa-user">&nbsp;</i>Σύνδεση</a>
+                </li>
+                {{/unless}}`+ ulHTML;
+                let li = document.createElement("li");
+                ul.append(li);
+                li.setAttribute("class", "navbar-text");
+                li.innerHTML = `{{#if user}}<li class="nav-item dropdown">
+                    Καλως ήρθες<a class="nav-link dropdown-toggle user-info" style="display: inline" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ user }}</a><div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item text-dark user-settings" href="../user-info.html" onclick="setStorage()"">Ρυθμίσεις χρήστη</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-dark user-settings" href="logout">Αποσύνδεση</a></div></li >{{/if}}`;
+                let menu = document.querySelector("#main-menu");
+                active.setAttribute("class", "nav-item");
+                let admin = document.createElement("li");
+                admin.setAttribute("class", "nav-item active");
+                menu.appendChild(admin);
+                admin.innerHTML = `<a class="nav-link" href="messages.html">ΜΗΝΥΜΑΤΑ</a>`;
+            });
+        });
+    </script>
+    <div class="bg">
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+    </div>
+    <div class="container">
+        <div class="pb-2 mt-4 mb-2 border-bottom text-center">
+            <h2 name="contact" id="cont">ΜΗΝΥΜΑΤΑ</h2><br>
+        </div>
+        <div class="jumbotron mt-3">
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th scope="col">Όνοματεπώνυμο</th>
+                            <th scope="col">Email</th>
+                            <th scope="col"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="container">
+                <div class="jumbotron mt-3" style="padding: 0; margin: 0">
+                    <div>
+                        <h5 class="mb-4 mt-4">Μήνυμα:</h5>
+                    </div>
+                    <textarea id="msgtext" class="p-4 text-justify" disabled rows=15 style="width: 100%;height: 100%; box-sizing: border-box;">
+
+                        </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1>&nbsp;</h1>
+    <h1>&nbsp;</h1>
+    <h1>&nbsp;</h1>
+    <div id="footer-placeholder">
+    </div>
+    <script>
+        $(function () {
+            $("#footer-placeholder").load("footer.html");
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="utf-8">
+    <title>Tennis Club</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="courts.js" defer></script>
+    <script src="saveSource.js" async></script>
+</head>
+
+<body>
+    <div id="nav-placeholder" class="contact">
+    </div>
+    <script>
+        $(function () {
+            $("#nav-placeholder").load("nav.hbs", function () {
+                let active = document.getElementById("courts");
+                active.setAttribute("class", active.getAttribute("class") + " active");
+                //
+                let ul = document.getElementsByClassName("last")[0];
+                let ulHTML = ul.innerHTML;
+                ul.innerHTML = `
+                {{#unless user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="sign-up.html" onclick="setStorage()"><i class="fas fa-sign-in-alt">&nbsp;</i>Εγγραφή</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html" onclick="setStorage()"><i class="fas fa-user">&nbsp;</i>Σύνδεση</a>
+                </li>
+                {{/unless}}`+ ulHTML;
+                let li = document.createElement("li");
+                ul.append(li);
+                li.setAttribute("class", "navbar-text");
+                li.innerHTML = `{{#if user}}<li class="nav-item dropdown">
+                    Καλως ήρθες<a class="nav-link dropdown-toggle user-info" style="display: inline" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ user }}</a><div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item text-dark user-settings" href="../user-info.html" onclick="setStorage()">Ρυθμίσεις χρήστη</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-dark user-settings" href="logout">Αποσύνδεση</a></div></li >{{/if}}`;
+            });
+        });
+    </script>
+    <div class="bg">
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+    </div>
+    <div class="container">
+        <div class="pb-2 mt-4 mb-2 border-bottom text-center">
+            <h2 name="contact" id="cont">Διαθεσιμότητα γηπέδων</h2><br>
+        </div>
+        <p class="text-center">Εδώ μπορείτε να κλείσετε κάποια από τα γήπεδά μας.</p>
+        <div class="jumbotron mt-3">
+            <div class="d-flex justify-content-around flex-wrap">
+                <div>
+                    <form method="POST" id="myform">
+                        <div class="form-group">
+                            <label class="ml-1" for="facility">Επιλέξτε εγκατάσταση:</label>
+                            <select class="form-control" id="facility" name="facility" onchange="updateImage()">
+                                <option value="1" selected>Γήπεδο 1</option>
+                                <option value="2">Γήπεδο 2</option>
+                                <option value="3">Γήπεδο 3</option>
+                                <option value="4">Γήπεδο 4</option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label class="ml-1" for="date">Επιλέξτε ημερομηνία:</label>
+                            <input type="date" class="form-control" id="date" name="date" onchange="clearWarning()">
+                            <script>
+                                date.min = new Date().toISOString().split("T")[0];
+                                let today = new Date();
+                                today.setMonth(today.getMonth() + 2)
+                                date.max = today.toISOString().split("T")[0];
+                            </script>
+                        </div>
+                        
+                    </form>
+
+                    <div id="reserv" style="margin-top: 100px;">
+
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <img src="court-1.jpg" id="facilityImage" style="width: 500px;">
+                    </div>
+                    <div>
+                        <div class="warning" style="margin-top: 50px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+
+            </div>
+            <div class="d-flex flex-row">
+
+            </div>
+        </div>
+    </div>
+    <h1>&nbsp;</h1>
+    <h1>&nbsp;</h1>
+    <h1>&nbsp;</h1>
+    <div id="footer-placeholder">
+    </div>
+    <script>
+        $(function () {
+            $("#footer-placeholder").load("footer.html");
+        });
+    </script>
+</body>
+
+</html>

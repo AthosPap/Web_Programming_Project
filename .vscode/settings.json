@@ -1,0 +1,5 @@
+{
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.deploySubpath": ".",
+    "appService.defaultWebAppToDeploy": "/subscriptions/f80bb4a5-6669-4b27-ad29-31d843d8f001/resourceGroups/gk802/providers/Microsoft.Web/sites/tennisclub"
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="utf-8">
+    <title>Tennis Club</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sign-up.css">
+    <script src="goBack.js" defer></script>
+    {{!-- <script src="js/script.js" defer></script> --}}
+</head>
+
+<body>
+    <div>
+        <a class="text-light back" href="home.html"><i class="fas fa-arrow-left fa-2x"></i></a>
+    </div>
+    <div class="container d-flex justify-content-center">
+        <div class="card d-flex justify-content-center mt-5">
+            <div class="d-flex justify-content-center">
+                <h3 class="mt-4">Εγγραφή</h3>
+            </div>
+            <div>
+                {{!-- {{#if notAllFields}}
+                <span class="ml-5 text-danger">All fields required</span>
+                {{/if}} --}}
+                {{#if passNotMatch}}
+                <span class="ml-5 text-danger">Οι κωδικοί δεν είναι ίδιοι</span>
+                {{/if}}
+                {{#if usernameTaken}}
+                <span class="ml-5 text-danger">Το όνομα χρήστη δεν είναι διαθέσιμο</span>
+                <script>
+                    document.querySelector(".card").style.height = "620px";
+                </script>
+                {{/if}}
+                {{#if emailTaken}}
+                <span class="ml-5 text-danger">Υπάρχει ήδη λογαριασμός με αυτό το email</span>
+                <script>
+                    document.querySelector(".card").style.height = "620px";
+                </script>
+                {{/if}}
+                {{#if notPhone}}
+                <span class="ml-5 text-danger">Η μορφή τηλεφώνου δεν είναι σωστή</span>
+                <script>
+                    document.querySelector(".card").style.height = "620px";
+                </script>
+                {{/if}}
+                {{#if notSecure}}
+                <div class="text-danger text-center">Ο κωδικός πρέπει να έχει μήκος τουλάχιστον 8 χαρακτήρες</div>
+                <script>
+                    document.querySelector(".card").style.height = "640px";
+                </script>
+                {{/if}}
+                <form method="POST"  accept-charset="utf-8">
+                    <div class="form-group input">
+                        <input type="text" name="name" class="form-control" placeholder="Όνομα" required>
+                    </div>
+                    <div class="form-group input">
+                        <input type="text" name="surname" class="form-control" placeholder="Επώνυμο" required>
+                    </div>
+                    <div class="form-group input">
+                        <input type="text" name="username" class="form-control" placeholder="username" required>
+                    </div>
+                    <div class="form-group input">
+                        <input type="email" name="email" class="form-control" placeholder="email" required>
+                    </div>
+                    <div class="form-group input">
+                        <input type="number" name="phone" class="form-control" placeholder="Τηλέφωνο">
+                    </div>
+                    <div class="form-group input">
+                        <input type="text" id="birthdate" name="birthdate" class="form-control textbox-n"
+                            placeholder="Ημερομηνία Γέννησης" onfocus="(this.type='date')" onblur="(this.type='text')">
+                        <script>
+                            $(function () {
+                                let maxDate = "2014-12-31";
+                                let minDate = '1930-12-31';
+                                $('#birthdate').attr('max', maxDate);
+                                $('#birthdate').attr('min', minDate);
+                            });
+                        </script>
+                    </div>
+                    <div class="form-group input">
+                        <input type="password" name="password" class="form-control" placeholder="Κωδικός" required>
+                    </div>
+                    <div class="form-group input">
+                        <input type="password" name="passwordRep" class="form-control" placeholder="Επανάληψη Κωδικού"
+                            required>
+                    </div>
+                    <div class="form-group input d-flex justify-content-center">
+                        <input type="submit" class="btn btn-primary" value="create acount">
+                    </div>
+                    {{#if keepData}}
+                    <script>
+                        let decodedJsonName = decodeURIComponent("{{{name}}}");
+                        let decodedJsonSurname = decodeURIComponent("{{{surname}}}");
+                        let decodedJsonUsername = decodeURIComponent("{{{username}}}");
+                        let decodedJsonEmail = decodeURIComponent("{{{email}}}");
+                        let decodedJsonPhone = decodeURIComponent("{{{phone}}}");
+                        let decodedJsonBirthdate = decodeURIComponent("{{{birthdate}}}");
+                        document.getElementsByName("name")[0].value = JSON.parse(decodedJsonName);
+                        document.getElementsByName("surname")[0].value = JSON.parse(decodedJsonSurname);
+                        document.getElementsByName("username")[0].value = JSON.parse(decodedJsonUsername);
+                        document.getElementsByName("email")[0].value = JSON.parse(decodedJsonEmail);
+                        document.getElementsByName("phone")[0].value = JSON.parse(decodedJsonPhone);
+                        document.getElementsByName("birthdate")[0].value = JSON.parse(decodedJsonBirthdate);
+                    </script>
+                    {{/if}}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+html,body{
+    background-image: url('http://getwallpapers.com/wallpaper/full/9/b/4/384547.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.input-group-prepend span{
+    width: 50px;
+    background-color: cornflowerblue;
+    border: none !important;
+    color: black;
+}
+
+.card{ 
+    color: white;
+    height: 560px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 450px;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.link a{
+    margin-left: 5px;
+}
+
+.link{
+    margin-top: 2.2em;
+}
+
+.input{
+    margin: 1em;
+}
+
+.btn{
+    width: 180px;
+    margin: 2em;
+}
+
+#remember{
+    height: 15px;
+    width: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.back{
+    float: left;
+    margin-top: 2em;
+    margin-left: 5em;
+}

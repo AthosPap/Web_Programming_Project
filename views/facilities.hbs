@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="utf-8">
+    <title>Tennis Club</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="saveSource.js" async></script>
+    <style>
+        body {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="350">
+    <div id="nav-placeholder" class="facilities">
+    </div>
+    <script>
+        $(function () {
+            $("#nav-placeholder").load("nav.hbs", function () {
+                let active = document.getElementById("facilities");
+                active.setAttribute("class", active.getAttribute("class") + " active");
+                //
+                let ul = document.getElementsByClassName("last")[0];
+                let ulHTML = ul.innerHTML;
+                ul.innerHTML = `
+                {{#unless user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="sign-up.html" onclick="setStorage()"><i class="fas fa-sign-in-alt">&nbsp;</i>Εγγραφή</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html" onclick="setStorage()"><i class="fas fa-user">&nbsp;</i>Σύνδεση</a>
+                </li>
+                {{/unless}}`+ ulHTML;
+                let li = document.createElement("li");
+                ul.append(li);
+                li.setAttribute("class", "navbar-text");
+                li.innerHTML = `{{#if user}}<li class="nav-item dropdown">
+                    Καλως ήρθες<a class="nav-link dropdown-toggle user-info" style="display: inline" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ user }}</a><div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item text-dark user-settings" href="../user-info.html" onclick="setStorage()">Ρυθμίσεις χρήστη</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-dark user-settings" href="logout">Αποσύνδεση</a></div></li >{{/if}}`;
+                let decodedJson = decodeURIComponent("{{{isAdmin}}}");
+                let jsonObjAdmin = JSON.parse(decodedJson);
+                if (jsonObjAdmin) {
+                    let menu = document.querySelector("#main-menu");
+                    let admin = document.createElement("li");
+                    menu.appendChild(admin);
+                    admin.innerHTML = `<a class="nav-link" href="messages.html">ΜΗΝΥΜΑΤΑ</a>`;
+                }
+            });
+        });
+    </script>
+    <div class="bg">
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="pb-2 mt-4 mb-2 border-bottom text-center">
+            <h2>ΕΓΚΑΤΑΣΤΑΣΕΙΣ</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">
+
+            </div>
+            <div class="col-sm-7 col-xs-8">
+                <div id="tennis-courts">
+                    <h1>&nbsp;</h1>
+                    <h3>ΓΗΠΕΔΑ ΤΕΝΙΣ</h3><br>
+                    <p>
+                        Το ΗΜΤΥ-Tennis club διαθέτει 6 γήπεδα εξωτερικού χώρου άριστης ποιότητας με συχνή συντήρηση και
+                        φροντίδα.
+                        Τα γήπεδα διαθέτουν χωμάτινη επιφάνεια και επαρκή φωτισμό κατά την διάρκεια της νύχτας έτσι ώστε
+                        να
+                        μην εμποδίζεται
+                        το παιχνίδι.
+                    </p>
+                    <h1>&nbsp;</h1>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <p>&nbsp;</p>
+                        </div>
+                        <div class="col-md-10">
+                            <img src="court-2.jpg" alt="court1" style="width:100%;">
+                        </div>
+                        <div class="col-md-1">
+                            <p>&nbsp;</p>
+                        </div>
+                    </div>
+                    <h1>&nbsp;</h1>
+                    <h1>&nbsp;</h1>
+                    <h1>&nbsp;</h1>
+                </div>
+                <div id="gym">
+                    <h1>&nbsp;</h1>
+                    <h3>ΓΥΜΝΑΣΤΗΡΙΟ</h3><br>
+                    <p>
+                        Το ΗΜΤΥ-Tennis club διαθέτει εσωτερικό γυμναστήριο 80τ.μ με μεγάλη ποικιλία οργάνων γυμναστικής
+                        τόσο για αερόβιο όσο και για μυική ενδυνάμωση.
+                    </p>
+                    <h1>&nbsp;</h1>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <p>&nbsp;</p>
+                        </div>
+                        <div class="col-md-10">
+                            <img src="gym.jpg" alt="gym" style="width:100%;">
+                        </div>
+                        <div class="col-md-1">
+                            <p>&nbsp;</p>
+                        </div>
+                    </div>
+                    <h1>&nbsp;</h1>
+                    <h1>&nbsp;</h1>
+                    <h1>&nbsp;</h1>
+                </div>
+                <div id="pool">
+                    <h1>&nbsp;</h1>
+                    <h3>ΠΙΣΙΝΑ</h3><br>
+                    <p>
+                        Το ΗΜΤΥ-Tennis club διαθέτει επίσης και πισίνα διαστάσεων 10 επί 20 μέτρων ιδανική για μεγάλους
+                        αλλά
+                        και για παιδιά λόγω της ύπαρξης σημείων με μικρότερο βάθος ειδικά για τους μικρούς μας φίλους
+                        καθώς
+                        και συνεχή επιτήρηση από τον ναυαγοσώστη.
+                    </p>
+                    <h1>&nbsp;</h1>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <p>&nbsp;</p>
+                        </div>
+                        <div class="col-md-10">
+                            <img src="pool-2.jpg" alt="pool" style="width:100%;">
+                        </div>
+                        <div class="col-md-1">
+                            <p>&nbsp;</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+
+            </div>
+            <div class="hide">
+                <nav class="col-sm-2 col-xs-4 select" id="myScrollspy">
+                    <ul class="nav nav-pills dark-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active text-light btn-secondary" href="#tennis-courts">ΓΗΠΕΔΑ ΤΕΝΙΣ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light btn-secondary" href="#gym">ΓΥΜΝΑΣΤΗΡΙΟ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light btn-secondary" href="#pool">ΠΙΣΙΝΑ</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <script>
+            </script>
+            <script src="scrollspyControl.js"></script>
+            <div class="col-sm-1">
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+    </div>
+    <div id="footer-placeholder">
+    </div>
+    <script>
+        $(function () {
+            $("#footer-placeholder").load("footer.html");
+        });
+    </script>
+</body>
+
+</html>

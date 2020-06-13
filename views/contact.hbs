@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="utf-8">
+    <title>Tennis Club</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="saveSource.js" async></script>
+</head>
+
+<body>
+    <div id="nav-placeholder" class="contact">
+    </div>
+    <script>
+        $(function () {
+            $("#nav-placeholder").load("nav.hbs", function () {
+                let active = document.getElementById("contact");
+                active.setAttribute("class", active.getAttribute("class") + " active");
+                //
+                let ul = document.getElementsByClassName("last")[0];
+                let ulHTML = ul.innerHTML;
+                ul.innerHTML = `
+                {{#unless user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="sign-up.html" onclick="setStorage()"><i class="fas fa-sign-in-alt">&nbsp;</i>Εγγραφή</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html" onclick="setStorage()"><i class="fas fa-user">&nbsp;</i>Σύνδεση</a>
+                </li>
+                {{/unless}}`+ ulHTML;
+                let li = document.createElement("li");
+                ul.append(li);
+                li.setAttribute("class", "navbar-text");
+                li.innerHTML = `{{#if user}}<li class="nav-item dropdown">
+                    Καλως ήρθες<a class="nav-link dropdown-toggle user-info" style="display: inline" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ user }}</a><div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item text-dark user-settings" href="../user-info.html" onclick="setStorage()"">Ρυθμίσεις χρήστη</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-dark user-settings" href="logout">Αποσύνδεση</a></div></li >{{/if}}`;
+                let decodedJson = decodeURIComponent("{{{isAdmin}}}");
+                let jsonObjAdmin = JSON.parse(decodedJson);
+                if (jsonObjAdmin) {
+                    let menu = document.querySelector("#main-menu");
+                    let admin = document.createElement("li");
+                    menu.appendChild(admin);
+                    admin.innerHTML = `<a class="nav-link" href="messages.html">ΜΗΝΥΜΑΤΑ</a>`;
+                }
+            });
+        });
+    </script>
+    <div class="bg">
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+    </div>
+    <div class="container">
+        <div class="pb-2 mt-4 mb-2 border-bottom text-center">
+            <h2 name="contact" id="cont">Στοιχεία Επικοινωνίας</h2><br>
+        </div>
+        <div class="jumbotron mt-3">
+            <div class="d-flex justify-content-around flex-wrap">
+                <div>
+                    <div>
+                        <h5 id="talk" class="mb-4">Μιλήστε μας</h5>
+                    </div>
+                    {{#if sent}}
+                    <div class="alert alert-success" role="alert">
+                        <p>Λάβαμε το μύνημά σας, ευχαριστούμε!</p>
+                    </div>
+                    {{/if}}
+                    <form id="myForm" method="POST" accept-charset="utf-8">
+                        <div class="form-group">
+                            <label for="name">Ονοματεπώνυμο</label>
+                            <input type="text" class="form-control" name="name" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" required> 
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Μήνυμα</label>
+                            <textarea rows="9" cols="60" name="message" class="form-control" form="myForm" required></textarea>
+                        </div>
+                        <div class="form-group d-flex justify-content-center mt-4">
+                            <input type="submit" class="btn btn-primary btn-send" value="Αποστολή">
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <div class="pb-3">
+                        <h5>Contact Information</h5>
+                    </div>
+                    <div><i class="fas fa-globe">&nbsp;</i> Πανεπιστημιούπολη Πατρών 265 04</div><br><br>
+                    <div><i class="fas fa-phone">&nbsp;</i> 210-8720020</div><br><br>
+                    <div><i class="fas fa-envelope">&nbsp;</i> info@hmtytennis.gr</div><br><br>
+                    <div><i class="fas fa-clock">&nbsp;</i> Δευτέρα-Κυριακή 9:00-00:00</div><br>
+                    <div class="pt-4">
+                        <div class="pt-4">
+                            <h5>Social media</h5>
+                        </div>
+                        <div class="pt-2">
+                            <a href="https://www.facebook.com/pages/%CE%93%CF%85%CE%BC%CE%BD%CE%B1%CF%83%CF%84%CE%AE%CF%81%CE%B9%CE%BF-%CE%A0%CE%B1%CE%BD%CE%B5%CF%80%CE%B9%CF%83%CF%84%CE%B7%CE%BC%CE%AF%CE%BF%CF%85-%CE%A0%CE%B1%CF%84%CF%81%CF%8E%CE%BD/351432708286542" target="_blank"><i class="fab fa-facebook fa-2x">&nbsp;</i></a>
+                            <a href="https://www.instagram.com/explore/locations/203228/?hl=el" target="_blank"><i class="fab fa-instagram fa-2x">&nbsp;</i></a>
+                            <a href="#"><i class="fab fa-twitter fa-2x">&nbsp;</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1>&nbsp;</h1>
+    <h1>&nbsp;</h1>
+    <h1>&nbsp;</h1>
+    <div id="footer-placeholder">
+    </div>
+    <script>
+        $(function () {
+            $("#footer-placeholder").load("footer.html");
+        });
+    </script>
+</body>
+
+</html>
