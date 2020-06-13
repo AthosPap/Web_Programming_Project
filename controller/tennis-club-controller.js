@@ -1,7 +1,7 @@
 'use strict';
 /** Διαλέξτε το κατάλληλο μοντέλο */
 const model = require('../model/tennis-club-model-mysql.js');
-//const model = require('../model/task-list-model-mongo.js');
+//const model = require('../model/task-list-model-mongo.js'); 
 
 const logInController = require('./log-in-controller');
 
@@ -250,36 +250,62 @@ exports.getAllMessages = function (req, res) {
 
 exports.handleParticipation = function (req, res) {
     if (req.body.sub1) {
-        model.saveParticipation(req.session.loggedUserId, 1, null, null, null, function () {
-            let data = {
-                layout: false,
-                user: req.session.loggedUserId,
-            };
-            res.render('tournaments', data);
+        let usr = req.session.loggedUserId;
+        if (req.body.surname) {
+            usr = null;
+        }
+        model.saveParticipation(usr, 1, null, req.body.surname, req.body.phone, function () {
+            if (!req.body.surname) {
+                let data = {
+                    layout: false,
+                    user: req.session.loggedUserId,
+                };
+                res.render('tournaments', data);
+            }
+            else {
+                res.json({ resp: "ok" });
+            }
         })
     }
     else if (req.body.sub2) {
-        let name = req.body.teamname;
-        let email = req.body.teamemail;
-        let phone = req.body.teamphone;
-        console.log(name, email, phone);
         let params = {
-            name: name,
-            email: email,
-            phone: phone
+            name: req.body.teamname,
+            email: req.body.teamemail,
+            phone: req.body.teamphone
         };
-        model.saveParticipation(req.session.loggedUserId, 2, params, null, null, function () {
-            let data = {
-                layout: false,
-                user: req.session.loggedUserId,
-            };
-            res.render('tournaments', data);
+        let usr = req.session.loggedUserId;
+        if (req.body.surname) {
+            usr = null;
+            params = {
+                name: req.body.teamSurname,
+                phone: req.body.teamPhone,
+                email: null
+            }
+        }
+        model.saveParticipation(usr, 2, params, req.body.surname, req.body.phone, function () {
+            if (!req.body.surname) {
+                let data = {
+                    layout: false,
+                    user: req.session.loggedUserId
+                };
+                res.render('tournaments', data);
+            }
+            else {
+                res.json({ resp: "ok" });
+            }
         })
     }
     else {
-        model.removeParticipation(req.body.username, req.body.id, function () {
-            res.json({ resp: "ok" });
-        })
+        if (req.body.username) {
+            model.removeUserParticipation(req.body.username, req.body.id, function () {
+                res.json({ resp: "ok" });
+            })
+        }
+        else {
+            model.removeNonUserParticipation(req.body.surname, req.body.phone, req.body.id, function () {
+                res.json({ resp: "ok" });
+            })
+        }
     }
 }
 

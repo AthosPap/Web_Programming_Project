@@ -1,12 +1,12 @@
 'use strict';
 const bcrypt = require('bcrypt');
 
-/** Διαλέξτε το κατάλληλο μοντέλο */
+/** Διαλέξτε το κατάλληλο μοντέλο */ 
 const model = require('../model/tennis-club-model-mysql.js');
 //const model = require('../model/task-list-model-mongo.js');
 
 
-exports.getSignUp = function (req, res) {
+exports.getSignUp = function (req, res) { 
     res.render('sign-up', { layout: false });
 }
 
@@ -188,7 +188,6 @@ exports.getBack = function (req, res) {
 exports.checkAuthenticated = function (req, res, next) {
     //Αν η μεταβλητή συνεδρίας έχει τεθεί, τότε ο χρήστης είναι συνεδεμένος
     if (req.session.loggedUserId) {
-        console.log("user is authenticated");
         //Καλεί τον επόμενο χειριστή (handler) του αιτήματος
         next();
     }
@@ -203,7 +202,6 @@ exports.checkAuthenticated = function (req, res, next) {
 exports.checkNotAuthenticated = function (req, res, next) {
     //Αν η μεταβλητή συνεδρίας έχει τεθεί, τότε ο χρήστης είναι συνεδεμένος
     if (req.session.loggedUserId) {
-        console.log("user is authenticated2");
         //Καλεί τον επόμενο χειριστή (handler) του αιτήματος
         res.redirect('/');
     }

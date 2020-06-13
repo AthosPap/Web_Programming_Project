@@ -8,7 +8,7 @@ const mongoAtlasDatabase = "taskListDB";
 */
 // const uri ="";
 // Φτιάξτε μια βάση mongo στο MongoDB Atlas κα βάλτε εδώ το δικός σας connection string
-const uri = "mongodb+srv://billlys13:MYiphone4s@cluster0-fijkf.azure.mongodb.net/myDB?retryWrites=true&w=majority";
+const uri = "mongodb+srv://billlys13:MYiphone4s@cluster0-fijkf.azure.mongodb.net/myDB?retryWrites=true&w=majority"; 
 // 
 //Αλλάξτε το uri για να συνεχίσει η εκτέλεση:
 assert(uri!="", "Πρέπει να ορίσετε τα στοιχεία σύνδεσης σε μια βάση Mongo στο αρχείο task-list-model-monog.js για να συνεχίσετε");

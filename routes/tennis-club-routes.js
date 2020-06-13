@@ -9,7 +9,7 @@ const logInController = require('../controller/log-in-controller');
 router.route('/').get(tennisCLubController.getSlash);
 
 router.route('/home.html').get(tennisCLubController.getHome);
-router.route('/facilities.html').get(tennisCLubController.getFacilities);
+router.route('/facilities.html').get(tennisCLubController.getFacilities); 
 router.route('/gallery.html').get(tennisCLubController.getGallery);
 router.route('/contact.html').get(tennisCLubController.getContact);
 router.route('/tournaments.html').get(tennisCLubController.getTournaments);
