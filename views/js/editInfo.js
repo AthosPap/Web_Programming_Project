@@ -16,7 +16,7 @@ function b1(){
     card.style.height = '600px';
     let inputs = form.getElementsByTagName("input");
     for (inp of inputs){
-        if(inp.name != "username"){
+        if(inp.name != "username" &&inp.name != "email"){
             inp.removeAttribute("disabled");
         }
     }
@@ -30,7 +30,7 @@ function b2(){
     card.style.height = '560px';
     let inputs = form.getElementsByTagName("input");
     for (inp of inputs){
-        inp.removeAttribute("disabled");
+        inp.setAttribute("disabled", "");
     }
     button.onclick = b1;
 }

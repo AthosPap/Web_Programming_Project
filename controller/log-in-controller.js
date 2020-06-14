@@ -159,10 +159,9 @@ exports.saveUserInfo = function (req, res) {
     let name = req.body.name;
     let surname = req.body.surname;
     let username = req.session.loggedUserId;
-    let email = req.body.email;
     let phone = req.body.phone;
     let birthdate = req.body.birthdate;
-    model.updateUserInformation(username, name, surname, email, phone, birthdate, function () {
+    model.updateUserInformation(username, name, surname, phone, birthdate, function () {
         let data = {
             layout: false
         }

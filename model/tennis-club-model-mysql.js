@@ -60,9 +60,9 @@ exports.getUserInformation = function (username, next) {
     });
 }
 
-exports.updateUserInformation = function (username, name, surname, email, phone, birthdate, next) {
-    let values = [{ name: name }, { surname: surname }, { email: email }, { phone: phone }, { birthdate: birthdate }, username];
-    sql.query("UPDATE Users SET ?, ?, ?, ?, ? WHERE username = ?", values, function (err, res) {
+exports.updateUserInformation = function (username, name, surname, phone, birthdate, next) {
+    let values = [{ name: name }, { surname: surname }, { phone: phone }, { birthdate: birthdate }, username];
+    sql.query("UPDATE Users SET ?, ?, ?, ? WHERE username = ?", values, function (err, res) {
         if (err) {
             console.log("error: ", err);
         }

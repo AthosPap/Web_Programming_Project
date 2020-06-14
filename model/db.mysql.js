@@ -20,13 +20,13 @@ db.connect(function(err) {
     //     console.log("table Users deleted");
     // })
 
-    let sql = "CREATE TABLE IF NOT EXISTS Users (username VARCHAR(80) PRIMARY KEY, phone VARCHAR(80), password VARCHAR(80) NOT NULL, birthdate VARCHAR(100), gender INT, email VARCHAR(150) NOT NULL, name VARCHAR(80) NOT NULL, surname VARCHAR(80) NOT NULL, role VARCHAR(80)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+    let sql = "CREATE TABLE IF NOT EXISTS Users (username VARCHAR(80) PRIMARY KEY, phone VARCHAR(80), password VARCHAR(80) NOT NULL, birthdate VARCHAR(100), email VARCHAR(150) NOT NULL, name VARCHAR(80) NOT NULL, surname VARCHAR(80) NOT NULL, role VARCHAR(80)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
     db.query(sql, function(err, result){
         if (err) throw err;
         console.log("table Users created");
     })
 
-    // sql = "ALTER TABLE Users ADD COLUMN role VARCHAR(255) AFTER surname";
+    // sql = "UPDATE Users SET email = 'bill@gmail.com' WHERE username = 'bill'";
     // db.query(sql, function(err, result){
     //     if (err) throw err;
     //     console.log("table Users altered");
