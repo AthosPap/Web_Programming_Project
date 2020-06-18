@@ -3,6 +3,8 @@
 const model = require('../model/tennis-club-model-mysql.js');
 //const model = require('../model/task-list-model-mongo.js'); 
 
+const path = require('path');
+
 const logInController = require('./log-in-controller');
 
 
@@ -249,30 +251,17 @@ exports.getAllMessages = function (req, res) {
 }
 
 exports.handleParticipation = function (req, res) {
-    if (req.body.sub1) {
-        let usr = req.session.loggedUserId;
-        if (req.body.surname) {
-            usr = null;
+    let type = req.body.sub.slice(-3);
+    let id = req.body.sub.slice(0, -3);
+    if (type == "add") {
+        let params = null;
+        if (req.body.teamname) {
+            params = {
+                name: req.body.teamname,
+                email: req.body.teamemail,
+                phone: req.body.teamphone
+            };
         }
-        model.saveParticipation(usr, 1, null, req.body.surname, req.body.phone, function () {
-            if (!req.body.surname) {
-                let data = {
-                    layout: false,
-                    user: req.session.loggedUserId,
-                };
-                res.render('tournaments', data);
-            }
-            else {
-                res.json({ resp: "ok" });
-            }
-        })
-    }
-    else if (req.body.sub2) {
-        let params = {
-            name: req.body.teamname,
-            email: req.body.teamemail,
-            phone: req.body.teamphone
-        };
         let usr = req.session.loggedUserId;
         if (req.body.surname) {
             usr = null;
@@ -282,30 +271,47 @@ exports.handleParticipation = function (req, res) {
                 email: null
             }
         }
-        model.saveParticipation(usr, 2, params, req.body.surname, req.body.phone, function () {
-            if (!req.body.surname) {
-                let data = {
-                    layout: false,
-                    user: req.session.loggedUserId
-                };
-                res.render('tournaments', data);
+        model.saveParticipation(usr, id, params, req.body.surname, req.body.phone, function () {
+            res.json({ resp: "ok" });
+        })
+    }
+    else if (type == "del") {
+        if (req.body.username) {
+            model.removeUserParticipation(req.body.username, id, function () {
+                res.json({ resp: "ok" });
+            })
+        }
+        else {
+            model.removeNonUserParticipation(req.body.surname, req.body.phone, id, function () {
+                res.json({ resp: "ok" });
+            })
+        }
+    }
+    else if (type == "tou") {
+        let name = null;
+        if (req.files.photo) {
+            name = req.files.photo.name;
+        }
+        model.addTournament(req.body.name, req.body.dates, req.body.type, name, function () {
+            if (req.files.photo) {
+                let photo = req.files.photo;
+                photo.mv(path.join(__dirname, '../views/images/' + name), function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log(photo.name);
+                    res.json({ resp: "ok" });
+                });
             }
             else {
                 res.json({ resp: "ok" });
             }
         })
     }
-    else {
-        if (req.body.username) {
-            model.removeUserParticipation(req.body.username, req.body.id, function () {
-                res.json({ resp: "ok" });
-            })
-        }
-        else {
-            model.removeNonUserParticipation(req.body.surname, req.body.phone, req.body.id, function () {
-                res.json({ resp: "ok" });
-            })
-        }
+    else if (type == "dto") {
+        model.removeTournament(id, function () {
+            res.json({ resp: "ok" });
+        })
     }
 }
 
@@ -325,5 +331,11 @@ exports.removeMessage = function (req, res) {
     console.log(req.body.message);
     model.removeMess(req.body.message, function (result) {
         res.json({ resp: "ok" });
+    })
+}
+
+exports.getAllTournaments = function (req, res) {
+    model.getTournaments(function (result) {
+        res.json(result);
     })
 }

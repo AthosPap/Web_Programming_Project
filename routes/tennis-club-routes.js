@@ -23,6 +23,7 @@ router.route('/courts/:datefacility').get(tennisCLubController.getTimes);
 router.route('/courts/admin/:datefacility').get(tennisCLubController.getAdminTimes);
 router.route('/messages.html').get(tennisCLubController.getMessages);
 router.route('/messages/all').get(tennisCLubController.getAllMessages);
+router.route('/tournaments/tournaments').get(tennisCLubController.getAllTournaments);
 router.route('/tournaments/participation').get(tennisCLubController.getParticipation);
 router.route('/tournaments/all').get(tennisCLubController.getParticipations);
 

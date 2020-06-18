@@ -4,7 +4,11 @@ const exphbs = require('express-handlebars');
 const dotenv = require('dotenv').config({ path: __dirname + '/values.env' });
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const fileUpload = require('express-fileupload');
 
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 },
+  }));
 
 app.use(session({
     store: new MongoStore({ url: process.env.MONGO_URL,

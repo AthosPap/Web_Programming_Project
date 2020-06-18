@@ -3,13 +3,14 @@
 const bcrypt = require('bcrypt');
 
 let sql = require('./db.mysql.js');
-
+const fs = require('fs');
+const path = require('path');
 
 exports.createAccount = function (name, surname, username, email, phone, birthdate, password) {
     let values = [username, phone, password, birthdate, null, email, name, surname, null];
     sql.query("INSERT INTO Users VALUES (?)", [values], function (err, res) {
         if (err) {
-            console.log("error: ", err); 
+            console.log("error: ", err);
         }
         else {
             console.log("done!");
@@ -308,6 +309,47 @@ exports.removeMess = function (message, next) {
         }
         else {
             next();
+        }
+    })
+}
+
+exports.getTournaments = function (next) {
+    sql.query("SELECT * FROM Tournaments", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+        }
+        else {
+            next(res);
+        }
+    })
+}
+
+exports.addTournament = function (name, dates, type, photo, next) {
+    let values = [null, name, dates, type, photo];
+    sql.query("INSERT INTO Tournaments VALUES (?)", [values], function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+        }
+        else {
+            next();
+        }
+    })
+}
+
+exports.removeTournament = function (id, next) {
+    sql.query("DELETE FROM participates WHERE tournamentID = ?", id, function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+        }
+        else {
+            sql.query("SELECT photo FROM Tournaments WHERE id = ?", id, function (err, res) {
+                fs.unlink(path.join(__dirname, '../views/images/' + res[0].photo), (err) => {
+                    if (err) throw err;
+                    sql.query("DELETE FROM Tournaments WHERE id = ?", id, function (err, res) {
+                        next();
+                    })
+                });
+            })
         }
     })
 }

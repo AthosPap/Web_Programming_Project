@@ -1,12 +1,12 @@
 'use strict';
 const bcrypt = require('bcrypt');
 
-/** Διαλέξτε το κατάλληλο μοντέλο */ 
+/** Διαλέξτε το κατάλληλο μοντέλο */
 const model = require('../model/tennis-club-model-mysql.js');
 //const model = require('../model/task-list-model-mongo.js');
 
 
-exports.getSignUp = function (req, res) { 
+exports.getSignUp = function (req, res) {
     res.render('sign-up', { layout: false });
 }
 
@@ -156,17 +156,14 @@ exports.getUserInfo = function (req, res) {
 }
 
 exports.saveUserInfo = function (req, res) {
-    let name = req.body.name;
-    let surname = req.body.surname;
-    let username = req.session.loggedUserId;
-    let phone = req.body.phone;
-    let birthdate = req.body.birthdate;
-    model.updateUserInformation(username, name, surname, phone, birthdate, function () {
-        let data = {
-            layout: false
-        }
-        res.render('user-info', data);
-    });
+    if (req.body.phone.length == 10) {
+        model.updateUserInformation(req.session.loggedUserId, req.body.name, req.body.surname, req.body.phone, req.body.birthdate, function () {
+            res.json({ resp: "ok" });
+        });
+    }
+    else {
+        res.json({ resp: "notPhone" });
+    }
 }
 
 exports.logout = function (req, res) {

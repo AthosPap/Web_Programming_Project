@@ -137,13 +137,19 @@ db.connect(function(err) {
     //     console.log("table Tournaments deleted");
     // })
 
-    sql = "CREATE TABLE IF NOT EXISTS Tournaments (id INT PRIMARY KEY, name VARCHAR(150), dates VARCHAR(255) NOT NULL, type VARCHAR(100)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+    sql = "CREATE TABLE IF NOT EXISTS Tournaments (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(150), dates VARCHAR(255) NOT NULL, type VARCHAR(100), photo VARCHAR(255)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
     db.query(sql, function(err, result){
         if (err) throw err;
         console.log("table tournaments created");
     })
 
-    // sql = "INSERT INTO Tournaments VALUES (1, 'Καλοκαιρινό Μονό Ενηλίκων', '2020-07-12 to 2020-07-19', 'singles')";
+    // sql = "UPDATE Tournaments SET photo = 'doubles.jpg' WHERE id = 2";
+    // db.query(sql, function(err, result){
+    //     if (err) throw err;
+    //     console.log("table tournaments updated");
+    // })
+
+    // sql = "DELETE FROM Tournaments WHERE id = 5";
     // db.query(sql, function(err, result){
     //     if (err) throw err;
     //     console.log("table tournaments updated");
@@ -168,17 +174,17 @@ db.connect(function(err) {
         console.log("table participates created");
     })
 
-    // sql = "DELETE FROM participates WHERE id = 5";
+    // sql = "DELETE FROM participates WHERE id = 17";
     // db.query(sql, function(err, result){
     //     if (err) throw err;
     //     console.log("row participates deleted");
     // })
 
-    sql = "SELECT * FROM participates";
-    db.query(sql, function(err, result){
-        if (err) throw err;
-        console.log(result)
-    })
+    // sql = "SELECT * FROM participates";
+    // db.query(sql, function(err, result){
+    //     if (err) throw err;
+    //     console.log(result)
+    // })
 });
 
 
