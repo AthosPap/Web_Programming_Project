@@ -7,13 +7,12 @@ const fs = require('fs');
 const path = require('path');
 
 exports.createAccount = function (name, surname, username, email, phone, birthdate, password) {
-    let values = [username, phone, password, birthdate, null, email, name, surname, null];
+    let values = [username, phone, password, birthdate, email, name, surname, null];
     sql.query("INSERT INTO Users VALUES (?)", [values], function (err, res) {
         if (err) {
             console.log("error: ", err);
         }
         else {
-            console.log("done!");
         }
     });
 }
@@ -144,10 +143,7 @@ exports.getAdminTime = function (date, facility, next) {
                         reservation.surname = info.surname;
                         reservation.phone = info.phone;
                         reservation.email = info.email;
-                        console.log(reservation.name);
-                        console.log(i);
                         if (i == userReservations.length - 1) {
-                            console.log(res[0]);
                             next(res);
                         }
                     })

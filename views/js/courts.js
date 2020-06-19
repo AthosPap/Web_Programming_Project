@@ -106,7 +106,6 @@ function getReservations() {
         fetch("/courts/" + date + "," + facility).then(
             (response) => response.json().then(
                 (timesJson) => {
-                    console.log("times = ", timesJson);
                     let div = document.querySelector("#reserv");
                     div.innerHTML = tableHTML;
                     let rows = document.querySelector(".times").getElementsByTagName("tr");
@@ -121,7 +120,6 @@ function getReservations() {
                                 time: r.getElementsByTagName("th")[0].innerHTML,
                                 submit: "Κράτηση"
                             };
-                            console.log(data.time, data.submit);
                             fetch("/courts.html", {
                                 method: "POST",
                                 headers: {
@@ -172,7 +170,6 @@ function getReservations() {
                                             time: row.getElementsByTagName("th")[0].innerHTML,
                                             submit: "Αφαίρεση κράτησης",
                                         };
-                                        console.log("remove");
                                         fetch("/courts.html", {
                                             method: "POST",
                                             headers: {

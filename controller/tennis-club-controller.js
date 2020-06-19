@@ -122,10 +122,6 @@ exports.handleReservation = function (req, res) {
     let usrname = req.body.username;
     let surname = req.body.surname;
     let phone = req.body.phone;
-    console.log("faciity = ", facility);
-    console.log("date = ", date);
-    console.log("time = ", time);
-    console.log("type = ", type);
     if (type == "Κράτηση") {
         model.checkAdmin(req.session.loggedUserId, function (isAdmin) {
             if (!isAdmin) {
@@ -174,7 +170,6 @@ exports.handleReservation = function (req, res) {
 
 exports.getTimes = function (req, res) {
     let params = req.params.datefacility.split(",");
-    console.log(params[0], params[1]);
     model.getTime(params[0], params[1], req.session.loggedUserId, function (result) {
         res.json(result);
     })
@@ -182,9 +177,7 @@ exports.getTimes = function (req, res) {
 
 exports.getAdminTimes = function (req, res) {
     let params = req.params.datefacility.split(",");
-    console.log("admin", params[0], params[1]);
     model.getAdminTime(params[0], params[1], function (result) {
-        console.log("result = ", result);
         res.json(result);
     })
 }
@@ -193,7 +186,6 @@ exports.handleMessage = function (req, res) {
     let name = req.body.name;
     let email = req.body.email;
     let message = req.body.message;
-    console.log(name, email, message);
     model.saveMessage(name, email, message, function () {
         if (req.session.loggedUserId) {
             model.checkAdmin(req.session.loggedUserId, (isAdmin) => {
@@ -299,7 +291,6 @@ exports.handleParticipation = function (req, res) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log(photo.name);
                     res.json({ resp: "ok" });
                 });
             }
@@ -328,7 +319,6 @@ exports.getParticipations = function (req, res) {
 }
 
 exports.removeMessage = function (req, res) {
-    console.log(req.body.message);
     model.removeMess(req.body.message, function (result) {
         res.json({ resp: "ok" });
     })

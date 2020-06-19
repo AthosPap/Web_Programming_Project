@@ -69,7 +69,6 @@ function getTournaments() {
     fetch("/tournaments/tournaments").then(
         (response) => response.json().then(
             (tourJson) => {
-                console.log("tournaments = ", tourJson);
                 for (let tournament of tourJson) {
                     let div = document.createElement("div");
                     div.setAttribute("id", "tour" + tournament.id);
@@ -186,9 +185,7 @@ function getParticipation() {
     fetch("/tournaments/participation").then(
         (response) => response.json().then(
             (partJson) => {
-                console.log("participation = ", partJson);
                 for (let part of partJson) {
-                    console.log("query = ", "#tour" + part.tournamentID);
                     let master = document.querySelector("#tour" + part.tournamentID);
                     let div = master.querySelector("#for");
                     div.innerHTML = 'Έχετε δηλώσει συμμετοχή στο τουρνουά';

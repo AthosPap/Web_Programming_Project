@@ -61,11 +61,9 @@ function b2() {
 }
 
 function request() {
-    console.log("requested");
     fetch("/user-info/info").then(
         (response) => response.json().then(
             (userInfoJson) => {
-                console.log(userInfoJson);
                 username.value = userInfoJson.username;
                 name.value = userInfoJson.name;
                 surname.value = userInfoJson.surname;

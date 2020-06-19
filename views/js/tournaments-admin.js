@@ -62,7 +62,7 @@ const formhtml = `<form>
     <input type="text" class="form-control" size="40" id="dates" name="dates">
 </div>
 <div class="form-group">
-    <label for="type">Example select</label>
+    <label for="type">Τύπος Τουρνουά</label>
     <select class="form-control" id="type">
         <option value="singles">Μονά</option>
         <option value="doubles">Διπλά</option>
@@ -85,7 +85,6 @@ function getTournaments() {
     fetch("/tournaments/tournaments").then(
         (response) => response.json().then(
             (tourJson) => {
-                console.log("tournaments = ", tourJson);
                 container.innerHTML = `<div class="pb-2 mt-4 mb-2 border-bottom text-center">
                     <h2>ΤΟΥΡΝΟΥΑ</h2>
                 </div>
@@ -143,7 +142,6 @@ function getParticipations() {
     fetch("/tournaments/all").then(
         (response) => response.json().then(
             (partJson) => {
-                console.log("json = ", partJson);
                 for (let part of partJson) {
                     let master = document.querySelector("#tour" + part.tournamentID);
                     let table = master.getElementsByTagName("tbody")[0];

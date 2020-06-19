@@ -59,15 +59,13 @@ exports.processSignUp = function (req, res) {
                                                 res.redirect('sign-up.html');
                                             }
                                             else {
-                                                console.log("pass = " + hashedPassword);
                                                 model.createAccount(name, surname, username, email, phone, birthdate, hashedPassword);
                                                 res.redirect('../login.html');
                                             }
                                         });
                                     }
                                     else {
-                                        console.log("error");
-                                        console.log("passwords dont match");
+                                        data.passNotMatch = true;
                                         res.render('sign-up', data);
                                     }
                                 }
@@ -80,11 +78,6 @@ exports.processSignUp = function (req, res) {
                                 data.notSecure = true;
                                 res.render('sign-up', data);
                             }
-                        }
-                        else {       //doesnt make sense since we have all these field required
-                            data.notAllFields = true;
-                            console.log("not all fields");
-                            res.render('sign-up', data);
                         }
                     }
                 })
@@ -118,7 +111,6 @@ exports.processLogin = function (req, res) {
                         }
                     }
                     else {
-                        console.log("the username or password entered are incorrect");
                         let data = {
                             layout: false,
                             mistake: true
@@ -129,7 +121,6 @@ exports.processLogin = function (req, res) {
             });
         }
         else {
-            console.log("no such username in our database");
             let data = {
                 layout: false,
                 mistake: true
@@ -167,7 +158,6 @@ exports.saveUserInfo = function (req, res) {
 }
 
 exports.logout = function (req, res) {
-    console.log("logging out");
     let prevUrl = req.headers.referer;
     if (prevUrl.indexOf('courts') != -1 || prevUrl.indexOf('messages') != -1 || prevUrl.indexOf('tournaments') != -1) {
         prevUrl = '/';

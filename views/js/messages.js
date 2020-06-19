@@ -8,7 +8,6 @@ function getMessages() {
     fetch("/messages/all").then(
         (response) => response.json().then(
             (messagesJson) => {
-                console.log(messagesJson);
                 for (let message of messagesJson) {
                     let tr = document.createElement("tr");
                     table.appendChild(tr);
