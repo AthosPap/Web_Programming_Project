@@ -160,7 +160,6 @@ function getReservations() {
         fetch("/courts/admin/" + date + "," + facility).then(
             (response) => response.json().then(
                 (timesJson) => {
-                    console.log("times = ", timesJson);
                     let div = document.querySelector("#reserv");
                     div.innerHTML = table;
                     let rows = document.querySelector(".times").getElementsByTagName("tr");
@@ -203,7 +202,6 @@ function getReservations() {
                                         }).then(
                                             (resp) => resp.json().then(
                                                 (Jsonobj) => {
-                                                    console.log("done");
                                                     getReservations();
                                                 }))
                                     }
@@ -244,7 +242,6 @@ function getReservations() {
                                             }).then(
                                                 (resp) => resp.json().then(
                                                     (Jsonobj) => {
-                                                        console.log("done");
                                                         getReservations();
                                                     }))
                                         }
@@ -288,7 +285,6 @@ function getReservations() {
                                     }).then(
                                         (resp) => resp.json().then(
                                             (Jsonobj) => {
-                                                console.log("done");
                                                 getReservations();
                                             }))
                                 })

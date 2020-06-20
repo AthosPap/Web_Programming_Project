@@ -3,16 +3,16 @@
 const bcrypt = require('bcrypt');
 
 let sql = require('./db.mysql.js');
-
+const fs = require('fs');
+const path = require('path');
 
 exports.createAccount = function (name, surname, username, email, phone, birthdate, password) {
-    let values = [username, phone, password, birthdate, null, email, name, surname, null];
+    let values = [username, phone, password, birthdate, email, name, surname, null];
     sql.query("INSERT INTO Users VALUES (?)", [values], function (err, res) {
         if (err) {
             console.log("error: ", err);
         }
         else {
-            console.log("done!");
         }
     });
 }
@@ -60,9 +60,9 @@ exports.getUserInformation = function (username, next) {
     });
 }
 
-exports.updateUserInformation = function (username, name, surname, email, phone, birthdate, next) {
-    let values = [{ name: name }, { surname: surname }, { email: email }, { phone: phone }, { birthdate: birthdate }, username];
-    sql.query("UPDATE Users SET ?, ?, ?, ?, ? WHERE username = ?", values, function (err, res) {
+exports.updateUserInformation = function (username, name, surname, phone, birthdate, next) {
+    let values = [{ name: name }, { surname: surname }, { phone: phone }, { birthdate: birthdate }, username];
+    sql.query("UPDATE Users SET ?, ?, ?, ? WHERE username = ?", values, function (err, res) {
         if (err) {
             console.log("error: ", err);
         }
@@ -143,10 +143,7 @@ exports.getAdminTime = function (date, facility, next) {
                         reservation.surname = info.surname;
                         reservation.phone = info.phone;
                         reservation.email = info.email;
-                        console.log(reservation.name);
-                        console.log(i);
                         if (i == userReservations.length - 1) {
-                            console.log(res[0]);
                             next(res);
                         }
                     })
@@ -247,17 +244,27 @@ exports.checkParticipations = function (next) {
             console.log("error: ", err);
         }
         else {
-            if (res.length == 0) {
-                next([]);
+            let userParticipations = [];
+            let nonuserParticipations = [];
+            for (let participation of res) {
+                if (participation.username) {
+                    userParticipations.push(participation);
+                }
+                else {
+                    nonuserParticipations.push(participation);
+                }
+            }
+            if (userParticipations.length == 0) {
+                next(nonuserParticipations);
             }
             else {
-                res.forEach(function (participation, i) {
+                userParticipations.forEach(function (participation, i) {
                     exports.getUserInformation(participation.username, function (info) {
-                        participation.name = info.name;
-                        participation.surname = info.surname;
-                        participation.phone = info.phone;
-                        participation.email = info.email;
-                        if (i == res.length - 1) {
+                        participation.userName = info.name;
+                        participation.userSurname = info.surname;
+                        participation.userPhone = info.phone;
+                        participation.userEmail = info.email;
+                        if (i == userParticipations.length - 1) {
                             next(res);
                         }
                     })
@@ -267,14 +274,26 @@ exports.checkParticipations = function (next) {
     })
 }
 
-exports.removeParticipation = function (username, id, next) {
+exports.removeUserParticipation = function (username, id, next) {
     let values = [username, id];
     sql.query("DELETE FROM participates WHERE username = ? AND tournamentID = ?", values, function (err, res) {
         if (err) {
             console.log("error: ", err);
         }
         else {
-            next(res);
+            next();
+        }
+    })
+}
+
+exports.removeNonUserParticipation = function (surname, phone, id, next) {
+    let values = [surname, phone, id];
+    sql.query("DELETE FROM participates WHERE surname = ? AND phone = ? AND tournamentID = ?", values, function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+        }
+        else {
+            next();
         }
     })
 }
@@ -286,6 +305,47 @@ exports.removeMess = function (message, next) {
         }
         else {
             next();
+        }
+    })
+}
+
+exports.getTournaments = function (next) {
+    sql.query("SELECT * FROM Tournaments", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+        }
+        else {
+            next(res);
+        }
+    })
+}
+
+exports.addTournament = function (name, dates, type, photo, next) {
+    let values = [null, name, dates, type, photo];
+    sql.query("INSERT INTO Tournaments VALUES (?)", [values], function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+        }
+        else {
+            next();
+        }
+    })
+}
+
+exports.removeTournament = function (id, next) {
+    sql.query("DELETE FROM participates WHERE tournamentID = ?", id, function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+        }
+        else {
+            sql.query("SELECT photo FROM Tournaments WHERE id = ?", id, function (err, res) {
+                fs.unlink(path.join(__dirname, '../views/images/' + res[0].photo), (err) => {
+                    if (err) throw err;
+                    sql.query("DELETE FROM Tournaments WHERE id = ?", id, function (err, res) {
+                        next();
+                    })
+                });
+            })
         }
     })
 }

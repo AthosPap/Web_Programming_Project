@@ -59,15 +59,13 @@ exports.processSignUp = function (req, res) {
                                                 res.redirect('sign-up.html');
                                             }
                                             else {
-                                                console.log("pass = " + hashedPassword);
                                                 model.createAccount(name, surname, username, email, phone, birthdate, hashedPassword);
                                                 res.redirect('../login.html');
                                             }
                                         });
                                     }
                                     else {
-                                        console.log("error");
-                                        console.log("passwords dont match");
+                                        data.passNotMatch = true;
                                         res.render('sign-up', data);
                                     }
                                 }
@@ -80,11 +78,6 @@ exports.processSignUp = function (req, res) {
                                 data.notSecure = true;
                                 res.render('sign-up', data);
                             }
-                        }
-                        else {       //doesnt make sense since we have all these field required
-                            data.notAllFields = true;
-                            console.log("not all fields");
-                            res.render('sign-up', data);
                         }
                     }
                 })
@@ -118,7 +111,6 @@ exports.processLogin = function (req, res) {
                         }
                     }
                     else {
-                        console.log("the username or password entered are incorrect");
                         let data = {
                             layout: false,
                             mistake: true
@@ -129,7 +121,6 @@ exports.processLogin = function (req, res) {
             });
         }
         else {
-            console.log("no such username in our database");
             let data = {
                 layout: false,
                 mistake: true
@@ -156,22 +147,17 @@ exports.getUserInfo = function (req, res) {
 }
 
 exports.saveUserInfo = function (req, res) {
-    let name = req.body.name;
-    let surname = req.body.surname;
-    let username = req.session.loggedUserId;
-    let email = req.body.email;
-    let phone = req.body.phone;
-    let birthdate = req.body.birthdate;
-    model.updateUserInformation(username, name, surname, email, phone, birthdate, function () {
-        let data = {
-            layout: false
-        }
-        res.render('user-info', data);
-    });
+    if (req.body.phone.length == 10) {
+        model.updateUserInformation(req.session.loggedUserId, req.body.name, req.body.surname, req.body.phone, req.body.birthdate, function () {
+            res.json({ resp: "ok" });
+        });
+    }
+    else {
+        res.json({ resp: "notPhone" });
+    }
 }
 
 exports.logout = function (req, res) {
-    console.log("logging out");
     let prevUrl = req.headers.referer;
     if (prevUrl.indexOf('courts') != -1 || prevUrl.indexOf('messages') != -1 || prevUrl.indexOf('tournaments') != -1) {
         prevUrl = '/';
@@ -188,7 +174,6 @@ exports.getBack = function (req, res) {
 exports.checkAuthenticated = function (req, res, next) {
     //Αν η μεταβλητή συνεδρίας έχει τεθεί, τότε ο χρήστης είναι συνεδεμένος
     if (req.session.loggedUserId) {
-        console.log("user is authenticated");
         //Καλεί τον επόμενο χειριστή (handler) του αιτήματος
         next();
     }
@@ -203,7 +188,6 @@ exports.checkAuthenticated = function (req, res, next) {
 exports.checkNotAuthenticated = function (req, res, next) {
     //Αν η μεταβλητή συνεδρίας έχει τεθεί, τότε ο χρήστης είναι συνεδεμένος
     if (req.session.loggedUserId) {
-        console.log("user is authenticated2");
         //Καλεί τον επόμενο χειριστή (handler) του αιτήματος
         res.redirect('/');
     }

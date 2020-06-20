@@ -2,6 +2,78 @@ let selectFacility = document.querySelector("#facility");
 let image = document.querySelector("#facilityImage");
 let selectDate = document.querySelector("#date");
 let warning = document.querySelector(".warning");
+const tableHTML = `
+<table class="table">
+    <thead>
+        <tr class="table-secondary">
+            <th scope="col">Ώρα</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="times">
+        <tr class="table-success">
+            <th scope="row">09:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">10:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">11:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">12:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">13:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">14:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">15:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">16:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">17:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">18:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">19:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">20:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">21:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">22:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+        <tr class="table-success">
+            <th scope="row">23:00</th>
+            <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
+        </tr>
+    </tbody>
+</table>
+`;
 
 function updateImage() {
     let selected = selectFacility.options[selectFacility.selectedIndex].value;
@@ -34,80 +106,8 @@ function getReservations() {
         fetch("/courts/" + date + "," + facility).then(
             (response) => response.json().then(
                 (timesJson) => {
-                    console.log("times = ", timesJson);
                     let div = document.querySelector("#reserv");
-                    div.innerHTML = `
-                    <table class="table">
-                        <thead>
-                            <tr class="table-secondary">
-                                <th scope="col">Ώρα</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="times">
-                            <tr class="table-success">
-                                <th scope="row">09:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">10:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">11:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">12:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">13:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">14:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">15:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">16:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">17:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">18:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">19:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">20:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">21:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">22:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">23:00</th>
-                                <td><button class="btn btn-primary ml-5">Κράτηση</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    `;
+                    div.innerHTML = tableHTML;
                     let rows = document.querySelector(".times").getElementsByTagName("tr");
                     for (let r of rows) {
                         let lastTD = r.getElementsByTagName("td")[0];
@@ -120,7 +120,6 @@ function getReservations() {
                                 time: r.getElementsByTagName("th")[0].innerHTML,
                                 submit: "Κράτηση"
                             };
-                            console.log(data.time, data.submit);
                             fetch("/courts.html", {
                                 method: "POST",
                                 headers: {
@@ -171,7 +170,6 @@ function getReservations() {
                                             time: row.getElementsByTagName("th")[0].innerHTML,
                                             submit: "Αφαίρεση κράτησης",
                                         };
-                                        console.log("remove");
                                         fetch("/courts.html", {
                                             method: "POST",
                                             headers: {

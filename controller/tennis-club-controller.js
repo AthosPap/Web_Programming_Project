@@ -1,7 +1,9 @@
 'use strict';
 /** Διαλέξτε το κατάλληλο μοντέλο */
 const model = require('../model/tennis-club-model-mysql.js');
-//const model = require('../model/task-list-model-mongo.js');
+//const model = require('../model/task-list-model-mongo.js'); 
+
+const path = require('path');
 
 const logInController = require('./log-in-controller');
 
@@ -120,10 +122,6 @@ exports.handleReservation = function (req, res) {
     let usrname = req.body.username;
     let surname = req.body.surname;
     let phone = req.body.phone;
-    console.log("faciity = ", facility);
-    console.log("date = ", date);
-    console.log("time = ", time);
-    console.log("type = ", type);
     if (type == "Κράτηση") {
         model.checkAdmin(req.session.loggedUserId, function (isAdmin) {
             if (!isAdmin) {
@@ -172,7 +170,6 @@ exports.handleReservation = function (req, res) {
 
 exports.getTimes = function (req, res) {
     let params = req.params.datefacility.split(",");
-    console.log(params[0], params[1]);
     model.getTime(params[0], params[1], req.session.loggedUserId, function (result) {
         res.json(result);
     })
@@ -180,9 +177,7 @@ exports.getTimes = function (req, res) {
 
 exports.getAdminTimes = function (req, res) {
     let params = req.params.datefacility.split(",");
-    console.log("admin", params[0], params[1]);
     model.getAdminTime(params[0], params[1], function (result) {
-        console.log("result = ", result);
         res.json(result);
     })
 }
@@ -191,7 +186,6 @@ exports.handleMessage = function (req, res) {
     let name = req.body.name;
     let email = req.body.email;
     let message = req.body.message;
-    console.log(name, email, message);
     model.saveMessage(name, email, message, function () {
         if (req.session.loggedUserId) {
             model.checkAdmin(req.session.loggedUserId, (isAdmin) => {
@@ -249,35 +243,64 @@ exports.getAllMessages = function (req, res) {
 }
 
 exports.handleParticipation = function (req, res) {
-    if (req.body.sub1) {
-        model.saveParticipation(req.session.loggedUserId, 1, null, null, null, function () {
-            let data = {
-                layout: false,
-                user: req.session.loggedUserId,
+    let type = req.body.sub.slice(-3);
+    let id = req.body.sub.slice(0, -3);
+    if (type == "add") {
+        let params = null;
+        if (req.body.teamname) {
+            params = {
+                name: req.body.teamname,
+                email: req.body.teamemail,
+                phone: req.body.teamphone
             };
-            res.render('tournaments', data);
+        }
+        let usr = req.session.loggedUserId;
+        if (req.body.surname) {
+            usr = null;
+            params = {
+                name: req.body.teamSurname,
+                phone: req.body.teamPhone,
+                email: null
+            }
+        }
+        model.saveParticipation(usr, id, params, req.body.surname, req.body.phone, function () {
+            res.json({ resp: "ok" });
         })
     }
-    else if (req.body.sub2) {
-        let name = req.body.teamname;
-        let email = req.body.teamemail;
-        let phone = req.body.teamphone;
-        console.log(name, email, phone);
-        let params = {
-            name: name,
-            email: email,
-            phone: phone
-        };
-        model.saveParticipation(req.session.loggedUserId, 2, params, null, null, function () {
-            let data = {
-                layout: false,
-                user: req.session.loggedUserId,
-            };
-            res.render('tournaments', data);
+    else if (type == "del") {
+        if (req.body.username) {
+            model.removeUserParticipation(req.body.username, id, function () {
+                res.json({ resp: "ok" });
+            })
+        }
+        else {
+            model.removeNonUserParticipation(req.body.surname, req.body.phone, id, function () {
+                res.json({ resp: "ok" });
+            })
+        }
+    }
+    else if (type == "tou") {
+        let name = null;
+        if (req.files.photo) {
+            name = req.files.photo.name;
+        }
+        model.addTournament(req.body.name, req.body.dates, req.body.type, name, function () {
+            if (req.files.photo) {
+                let photo = req.files.photo;
+                photo.mv(path.join(__dirname, '../views/images/' + name), function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    res.json({ resp: "ok" });
+                });
+            }
+            else {
+                res.json({ resp: "ok" });
+            }
         })
     }
-    else {
-        model.removeParticipation(req.body.username, req.body.id, function () {
+    else if (type == "dto") {
+        model.removeTournament(id, function () {
             res.json({ resp: "ok" });
         })
     }
@@ -296,8 +319,13 @@ exports.getParticipations = function (req, res) {
 }
 
 exports.removeMessage = function (req, res) {
-    console.log(req.body.message);
     model.removeMess(req.body.message, function (result) {
         res.json({ resp: "ok" });
+    })
+}
+
+exports.getAllTournaments = function (req, res) {
+    model.getTournaments(function (result) {
+        res.json(result);
     })
 }

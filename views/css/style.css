@@ -31,10 +31,6 @@ nav ul{
       background-size: cover;
     }
   
-  .todo{
-    color: aqua;
-  }
-  
   .bg-f{
     background-color: #2f2f2f;
     color: #ffffff;
@@ -124,4 +120,8 @@ nav ul{
 
   .list-group{
     display: inline-block;
+  }
+
+  .mr-6{
+    margin-right: 7em;
   }
