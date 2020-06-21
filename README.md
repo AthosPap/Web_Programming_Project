@@ -8,8 +8,11 @@ Project εφαρμογής Τένις Κλαμπ στο πλαίσιο του μ
 3.	Κατεβάζουμε τα αντίστοιχα extensions στο VS Code (node.js & npm)
 4.	Στο  VS Code πατάμε “Open Folder” και ανοίγουμε τον φάκελο που περιέχει το project 
 5.	Ανοίγουμε το terminal (Ctrl + J) και 
+
   a.	Τρέχουμε το command npm install
+  
   b.	Τρέχουμε το command npm run debug
+  
   c.	Αν δούμε το μήνυμα Ready στο terminal του Vs Code τότε προχωράμε στο επόμενο βήμα, αλλιώς αν εμφανιστεί κάποιο error (κάποιες      φορές η βάση MySQL δίνει timeout error) επαναλαμβάνουμε το βήμα 5b 
 6.	Στον browser επισκεπτόμαστε την διεύθυνση http://localhost:8080/
 7.	Περιηγούμαστε ελεύθερα στην ιστοσελίδα!
