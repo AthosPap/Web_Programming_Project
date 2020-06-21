@@ -1,6 +1,6 @@
 let container = document.querySelector(".container");
 const newTour = `<div class="jumbotron mt-3">
-<div class="d-flex justify-content-around">
+<div class="d-flex justify-content-around flex-wrap">
     <div>
         <div>
             <h5 id="talk" class="mb-4 name">Καλοκαιρινό Μονό Ενηλίκων</h5>

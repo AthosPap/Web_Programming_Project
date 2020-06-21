@@ -3,7 +3,7 @@ const html = `<div class="jumbotron mt-3">
 <div class="d-flex justify-content-end">
     <button class="btn btn-danger btn-remove"><i class="fa fa-times" aria-hidden="true"></i></button>
 </div>
-<div class="d-flex justify-content-around">
+<div class="d-flex justify-content-around flex-wrap">
     <div>
         <div>
             <h5 id="talk" class="mb-4 name">Καλοκαιρινό Μονό Ενηλίκων</h5>
