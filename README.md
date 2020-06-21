@@ -15,8 +15,13 @@ Project εφαρμογής Τένις Κλαμπ στο πλαίσιο του μ
 7.	Περιηγούμαστε ελεύθερα στην ιστοσελίδα!
 
 Ήδη Διαθέσιμοι Λογαριασμοί:
+
  Τυπικοί χρήστες:
   username: athos pswd: aa
+  
   username: bill pswd: bb
+  
  Διαχειριστής:
+ 
   username: admin pswd: admin
+  
